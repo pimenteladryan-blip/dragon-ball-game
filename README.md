@@ -1,42 +1,61 @@
-# 🐉 Dragon Ball: Batalha de Ki
+# 🐉 Dragon Ball: Zenkai Fighters
 
-Jogo web de ação (estilo *shoot 'em up* aéreo) desenvolvido com **HTML, CSS e JavaScript puros**, para a atividade avaliativa de Desenvolvimento de Jogo com IA.
+Jogo de **luta 2D em pixel art** (estilo *Mortal Kombat* com tema Dragon Ball), desenvolvido com **HTML, CSS e JavaScript puros** — sem bibliotecas nem imagens externas (tudo desenhado em código na tela).
 
-## 🎮 Como jogar
+## 🕹️ Como jogar
 
-- **Mover:** setas ou **WASD** (no celular: arraste o dedo na tela ou use o D-pad)
-- **Atacar:** barra de **ESPAÇO**, clique/tap na tela ou botão **●**
-- **Rajada especial (Kamehameha):** **SHIFT** ou botão **⚡** — gasta 50 de Ki e acerta todos os inimigos
-- **Pausar:** **P** ou **ESC**
+| Ação | Jogador 1 | Jogador 2 / CPU |
+|---|---|---|
+| Mover / pular / agachar | ← ↑ ↓ → | W A S D |
+| Soco (combo: 2 socos) | Z | J |
+| Chute (finalizador na sequência) | X | K |
+| Ki — toque rápido: projétil | C | L |
+| Ki — **segurar e soltar**: feixe (Kamehameha) | C | L |
+| **SUPER** (com KI em 100%) | V | U |
+| Defender (segurar trás) | ← | A |
 
-## 🎯 Objetivo
+**Regras:** melhor de 3 rounds, 99 segundos por round.
+Acerte golpes para carregar o **KI** — no máximo, solte o golpe especial do personagem.
 
-- Sobreviver a **5 ondas** de inimigos (Saibamens e soldados da Força Freeza)
-- Derrotar o **chefão final: CELL** na onda 5 → **VITÓRIA**
-- Se a barra de **VIDA** chegar a 0 → **DERROTA**
+## 🎯 Personagens (4 heróis + 5 vilões)
 
-## ⭐ Recursos
+| Lado | Personagens |
+|---|---|
+| Heróis | Goku, Vegeta, Gohan, Piccolo |
+| Vilões | Broly, Jiren, Bills, Cell, Freeza |
 
-- Interface visual com HUD: pontos, onda, recorde, barras de VIDA e KI
-- Recorde salvo automaticamente (localStorage)
-- Itens: **Feijão Senzu** (cura) e **Esferas do Dragão** (recarrega Ki + pontos)
-- Efeitos: partículas, screen shake, aura, trilha de estrelas e barra de vida do chefe
-- Controles de teclado, mouse e **toque** (mobile)
-- Responsivo
+Cada um tem: 3 golpes com nome do anime (**projétil, feixe e SUPER**), stat próprio de vida/velocidade/poder e sprites próprios em pixel art.
 
-## 📁 Estrutura
+## 🌸 Cenários (referências a outros animes)
+
+1. **Vila da Folha** — referência a *Naruto* (montanha dos Hokages)
+2. **Cidade de Karakura** — referência a *Bleach* (noite, cerejeira, lua)
+3. **Japão Taisho** — referência a *Demon Slayer* (lanternas à noite)
+
+## 📁 Estrutura do código
 
 ```
 dragon-ball-game/
-├── index.html      # Estrutura e telas (menu, pausa, fim de jogo)
-├── css/style.css   # Estilo visual (tema Dragon Ball)
-└── js/game.js      # Regras, loop, colisões, IA e renderização
+├── index.html      # Telas: login, menu, seleção, cenário, HUD e resultado
+├── css/style.css   # Visual (login reaproveitado + interface da luta)
+└── js/
+    ├── data.js     # Dados: 9 personagens, golpes e 3 cenários
+    ├── art.js      # Pixel art: cenários, lutadores, retratos e efeitos
+    └── game.js     # Motor: telas, física, combos, KI, IA, rounds e HUD
 ```
 
-## 🕹️ Rodando localmente
+- **Tela de login** reaproveitada do projeto anterior (sem o medidor de nível de poder).
+- **IA do computador** com estados: avança, recua, defende, pula, ataca e usa especial.
+- Recorde de nome salvo no `localStorage`.
+
+## 🚀 Rodando localmente
 
 Abra o `index.html` no navegador, ou use um servidor local:
 
 ```bash
 npx serve .
 ```
+
+## 🌐 Online
+
+Jogo: https://pimenteladryan-blip.github.io/dragon-ball-game/

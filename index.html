@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dragon Ball: Batalha de Ki</title>
-  <meta name="description" content="Jogo web estilo Dragon Ball — derrote as ondas de inimigos e o chefão final." />
+  <title>Dragon Ball: Zenkai Fighters</title>
+  <meta name="description" content="Jogo de luta 2D em pixel art com tema Dragon Ball — 9 lutadores, combos, ki e supers." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -12,93 +12,113 @@
 </head>
 <body>
 
-  <div class="game-shell">
+<div class="shell">
 
-    <!-- CABEÇALHO / HUD -->
-    <header class="hud">
-      <div class="hud-item">
-        <span class="hud-label">PONTOS</span>
-        <span class="hud-value" id="score">0</span>
-      </div>
-      <div class="hud-item hud-center">
-        <span class="hud-label">ONDA</span>
-        <span class="hud-value" id="wave">1 / 5</span>
-      </div>
-      <div class="hud-item">
-        <span class="hud-label">RECORDE</span>
-        <span class="hud-value" id="highscore">0</span>
-      </div>
-    </header>
-
-    <div class="bars">
-      <div class="bar-row">
-        <span class="bar-name">VIDA</span>
-        <div class="bar hp"><i id="hpBar"></i></div>
-      </div>
-      <div class="bar-row">
-        <span class="bar-name">KI</span>
-        <div class="bar ki"><i id="kiBar"></i></div>
-      </div>
+  <!-- ============ HUD DA LUTA ============ -->
+  <div class="hud oculto" id="hud">
+    <div class="hud-lado">
+      <div class="hud-nome" id="nome1">JOGADOR 1</div>
+      <div class="barra hp"><i id="hp1"></i></div>
+      <div class="barra ki"><i id="ki1"></i></div>
+      <div class="pips" id="pips1"></div>
     </div>
-
-    <!-- ÁREA DO JOGO -->
-    <div class="stage" id="stage">
-      <canvas id="game" width="480" height="640"></canvas>
-
-      <!-- Tela inicial -->
-      <div class="overlay" id="menuScreen">
-        <h1 class="logo"><span>DRAGON</span><b>BALL</b></h1>
-        <p class="logo-sub">★ BATALHA DE KI ★</p>
-        <p class="story">As esferas do dragão foram espalhadas pelo universo!
-          Derrote as <b>5 ondas</b> de inimigos e vença o <b>chefão final</b>
-          para reunir as 7 esferas.</p>
-        <button class="btn" id="btnStart">COMEÇAR BATALHA</button>
-        <div class="instructions">
-          <p>⬅➡⬆⬇ ou <b>WASD</b> — mover</p>
-          <p><b>ESPAÇO</b> / clique — atacar com Ki</p>
-          <p><b>SHIFT</b> — rajada especial (gasta Ki)</p>
-          <p><b>P</b> / <b>ESC</b> — pausar</p>
-          <p class="mobile-hint">No celular: arraste para mover e toque no botão ⚡</p>
-        </div>
-      </div>
-
-      <!-- Pausa -->
-      <div class="overlay hidden" id="pauseScreen">
-        <h2 class="overlay-title">PAUSADO</h2>
-        <button class="btn" id="btnResume">CONTINUAR</button>
-      </div>
-
-      <!-- Fim de jogo -->
-      <div class="overlay hidden" id="endScreen">
-        <h2 class="overlay-title" id="endTitle">DERROTA</h2>
-        <p class="end-text" id="endText"></p>
-        <p class="end-score" id="endScore"></p>
-        <button class="btn" id="btnRestart">JOGAR NOVAMENTE</button>
-      </div>
-
-      <!-- Aviso de onda -->
-      <div class="wave-alert hidden" id="waveAlert">ONDA 1</div>
+    <div class="hud-centro">
+      <span id="crono">99</span>
+      <small id="roundTxt">ROUND 1</small>
     </div>
-
-    <!-- BOTÕES DE TOQUE (mobile) -->
-    <div class="touch-controls">
-      <div class="dpad">
-        <button class="dpad-btn" data-dir="up">▲</button>
-        <button class="dpad-btn" data-dir="left">◀</button>
-        <button class="dpad-btn" data-dir="down">▼</button>
-        <button class="dpad-btn" data-dir="right">▶</button>
-      </div>
-      <div class="action-btns">
-        <button class="action-btn ki-btn" id="btnSpecial">⚡</button>
-        <button class="action-btn" id="btnFire">●</button>
-      </div>
+    <div class="hud-lado dir">
+      <div class="hud-nome" id="nome2">JOGADOR 2</div>
+      <div class="barra hp"><i id="hp2"></i></div>
+      <div class="barra ki"><i id="ki2"></i></div>
+      <div class="pips" id="pips2"></div>
     </div>
-
-    <footer class="footer">
-      Atividade Avaliativa — Jogo com IA · HTML + CSS + JavaScript
-    </footer>
   </div>
 
-  <script src="js/game.js"></script>
+  <!-- ============ ARENA ============ -->
+  <div class="arena">
+    <canvas id="arena" width="480" height="270"></canvas>
+
+    <!-- LOGIN (reaproveitado da tela anterior, sem medidor) -->
+    <div class="tela" id="telaLogin">
+      <div class="card">
+        <h1 class="logo"><span>DRAGON</span><b>BALL</b></h1>
+        <p class="logo-sub">★ ZENKAI FIGHTERS ★</p>
+        <label class="campo">
+          <span>SEU NOME DE GUERREIRO</span>
+          <input type="text" id="inpNome" maxlength="14" placeholder="Digite aqui..." autocomplete="off" />
+        </label>
+        <button class="btn" id="btnEntrar">ENTRAR NA ARENA</button>
+      </div>
+    </div>
+
+    <!-- MENU -->
+    <div class="tela oculta" id="telaMenu">
+      <div class="card">
+        <h2 class="titulo" id="olaNome">OLÁ, GUERREIRO</h2>
+        <button class="btn" id="btn1Jogador">1 JOGADOR <small>vs COMPUTADOR</small></button>
+        <button class="btn verde" id="btn2Jogadores">2 JOGADORES <small>MESMO TECLADO</small></button>
+        <div class="controles">
+          <p><b>P1:</b> ←↑↓ mover · Z soco · X chute · C ki (segurar = feixe) · V super</p>
+          <p><b>P2:</b> A/D/W/S mover · J soco · K chute · L ki (segurar = feixe) · U super</p>
+          <p class="dica">Acerte golpes para encher o KI. Com KI no máximo, use o SUPER!</p>
+        </div>
+        <button class="btn fantasma" id="btnTrocar">TROCAR DE GUERREIRO</button>
+      </div>
+    </div>
+
+    <!-- SELEÇÃO DE PERSONAGEM -->
+    <div class="tela oculta" id="telaSelect">
+      <h2 class="titulo">ESCOLHA OS LUTADORES</h2>
+      <div class="slots">
+        <div class="slot ativo" id="slot1">
+          <span class="quem">JOGADOR 1</span>
+          <b class="quem-nome">—</b>
+          <em class="quem-golpes"></em>
+        </div>
+        <div class="vs">VS</div>
+        <div class="slot" id="slot2">
+          <span class="quem">COMPUTADOR</span>
+          <b class="quem-nome">—</b>
+          <em class="quem-golpes"></em>
+        </div>
+      </div>
+      <div class="grade" id="grade"></div>
+      <div class="acoes">
+        <button class="btn fantasma" id="btnVoltarMenu">VOLTAR</button>
+        <button class="btn" id="btnIrCenario" disabled>ESCOLHER CENÁRIO</button>
+      </div>
+    </div>
+
+    <!-- SELEÇÃO DE CENÁRIO -->
+    <div class="tela oculta" id="telaCenario">
+      <h2 class="titulo">ESCOLHA O CENÁRIO</h2>
+      <div class="cenarios" id="cenarios"></div>
+      <div class="acoes">
+        <button class="btn fantasma" id="btnVoltarSelect">VOLTAR</button>
+      </div>
+    </div>
+
+    <!-- AVISOS (ROUND / LUTEM / K.O.) -->
+    <div class="aviso oculto" id="aviso"></div>
+
+    <!-- RESULTADO -->
+    <div class="tela oculta" id="telaResultado">
+      <div class="card">
+        <h2 class="titulo" id="resTitulo">VITÓRIA!</h2>
+        <p class="resTexto" id="resTexto"></p>
+        <button class="btn" id="btnRevanche">REVANCHE</button>
+        <button class="btn fantasma" id="btnMenu">MENU PRINCIPAL</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="rodape">
+    Melhor de 3 rounds · Segure ← (ou A) para defender · Atividade Avaliativa — Jogo com IA
+  </footer>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/art.js"></script>
+<script src="js/game.js"></script>
 </body>
 </html>
