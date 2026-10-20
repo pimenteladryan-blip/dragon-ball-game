@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dragon Ball: Batalha de Ki</title>
+  <meta name="description" content="Jogo web estilo Dragon Ball — derrote as ondas de inimigos e o chefão final." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="game-shell">
+
+    <!-- CABEÇALHO / HUD -->
+    <header class="hud">
+      <div class="hud-item">
+        <span class="hud-label">PONTOS</span>
+        <span class="hud-value" id="score">0</span>
+      </div>
+      <div class="hud-item hud-center">
+        <span class="hud-label">ONDA</span>
+        <span class="hud-value" id="wave">1 / 5</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">RECORDE</span>
+        <span class="hud-value" id="highscore">0</span>
+      </div>
+    </header>
+
+    <div class="bars">
+      <div class="bar-row">
+        <span class="bar-name">VIDA</span>
+        <div class="bar hp"><i id="hpBar"></i></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-name">KI</span>
+        <div class="bar ki"><i id="kiBar"></i></div>
+      </div>
+    </div>
+
+    <!-- ÁREA DO JOGO -->
+    <div class="stage" id="stage">
+      <canvas id="game" width="480" height="640"></canvas>
+
+      <!-- Tela inicial -->
+      <div class="overlay" id="menuScreen">
+        <h1 class="logo"><span>DRAGON</span><b>BALL</b></h1>
+        <p class="logo-sub">★ BATALHA DE KI ★</p>
+        <p class="story">As esferas do dragão foram espalhadas pelo universo!
+          Derrote as <b>5 ondas</b> de inimigos e vença o <b>chefão final</b>
+          para reunir as 7 esferas.</p>
+        <button class="btn" id="btnStart">COMEÇAR BATALHA</button>
+        <div class="instructions">
+          <p>⬅➡⬆⬇ ou <b>WASD</b> — mover</p>
+          <p><b>ESPAÇO</b> / clique — atacar com Ki</p>
+          <p><b>SHIFT</b> — rajada especial (gasta Ki)</p>
+          <p><b>P</b> / <b>ESC</b> — pausar</p>
+          <p class="mobile-hint">No celular: arraste para mover e toque no botão ⚡</p>
+        </div>
+      </div>
+
+      <!-- Pausa -->
+      <div class="overlay hidden" id="pauseScreen">
+        <h2 class="overlay-title">PAUSADO</h2>
+        <button class="btn" id="btnResume">CONTINUAR</button>
+      </div>
+
+      <!-- Fim de jogo -->
+      <div class="overlay hidden" id="endScreen">
+        <h2 class="overlay-title" id="endTitle">DERROTA</h2>
+        <p class="end-text" id="endText"></p>
+        <p class="end-score" id="endScore"></p>
+        <button class="btn" id="btnRestart">JOGAR NOVAMENTE</button>
+      </div>
+
+      <!-- Aviso de onda -->
+      <div class="wave-alert hidden" id="waveAlert">ONDA 1</div>
+    </div>
+
+    <!-- BOTÕES DE TOQUE (mobile) -->
+    <div class="touch-controls">
+      <div class="dpad">
+        <button class="dpad-btn" data-dir="up">▲</button>
+        <button class="dpad-btn" data-dir="left">◀</button>
+        <button class="dpad-btn" data-dir="down">▼</button>
+        <button class="dpad-btn" data-dir="right">▶</button>
+      </div>
+      <div class="action-btns">
+        <button class="action-btn ki-btn" id="btnSpecial">⚡</button>
+        <button class="action-btn" id="btnFire">●</button>
+      </div>
+    </div>
+
+    <footer class="footer">
+      Atividade Avaliativa — Jogo com IA · HTML + CSS + JavaScript
+    </footer>
+  </div>
+
+  <script src="js/game.js"></script>
+</body>
+</html>
